@@ -7,6 +7,7 @@ body:
     id: domain
     attributes:
       label: "📌 서비스 도메인"
+      description: "해당 기능에서 어떤 도메인을 사용할지 작성해주세요."
       placeholder: "예: User, Order, Payment 등"
     validations:
       required: true
