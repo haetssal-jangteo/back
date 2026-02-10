@@ -1,7 +1,7 @@
 name: "🚀 Feature: 신규 기능 구현"
 description: "새로운 서비스 기능이나 API 작업을 정의합니다."
 title: "[FEAT] 서비스명 - 기능 요약"
-labels: ["feat", "backend"]
+labels: [ "feat", "backend" ]
 body:
   - type: input
     id: domain

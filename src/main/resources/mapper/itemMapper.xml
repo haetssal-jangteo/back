@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.app.haetssal_jangteo.mapper.ItemMapper">
+    <select id="selectById" resultType="itemDTO">
+        select
+            m.market_region, m.market_name, m.market_location, m.market_state,
+            c.category_name,  i.item_market_id, i.item_category_id, i.id, i.item_name, i.item_type, i.item_stock, i.item_price,
+            i.item_delivery_fee, i.item_content, i.item_state, i.item_view_count, i.created_datetime,
+            i.updated_datetime
+        from tbl_item i join tbl_market m
+                        on m.id = i.item_market_id
+                        join tbl_category c
+                        on c.id = i.item_category_id
+    </select>
+</mapper>
+
