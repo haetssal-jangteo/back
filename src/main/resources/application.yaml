@@ -8,7 +8,6 @@ spring:
     username: haetssal_jangteo
     password: 1234
 
-<<<<<<< HEAD
   servlet:
     multipart:
       enabled: true
@@ -16,15 +15,9 @@ spring:
       max-file-size: 5MB
       max-request-size: 15MB
 
-=======
->>>>>>> d3bb964 (회원가입 작성중)
 mybatis:
   configuration:
     map-underscore-to-camel-case: true
   mapper-locations: classpath*:/mapper/*.xml
   type-aliases-package: com.app.haetssal_jangteo.domain; com.app.haetssal_jangteo.dto;
-<<<<<<< HEAD
   type-handlers-package: com.app.haetssal_jangteo.mybatis.handler
-=======
-  type-handlers-package: com.app.haetssal_jangteo.mybatis.handler
->>>>>>> d3bb964 (회원가입 작성중)
