@@ -15,7 +15,6 @@ create table tbl_user (
                           created_datetime datetime default current_timestamp,
                           updated_datetime datetime default current_timestamp
 );
-select * from tbl_user;
 
 -- 소셜 회원 테이블
 create table tbl_auth (
@@ -24,7 +23,6 @@ create table tbl_auth (
                           constraint fk_user_auth foreign key (id)
                               references tbl_user(id)
 );
-select * from tbl_auth;
 
 -- 판매자 테이블
 create table tbl_seller (
@@ -84,14 +82,14 @@ create table tbl_sub_category (
 
 -- 상품 테이블
 create table tbl_item (
-                          id bigint unsigned PRIMARY KEY,
+                          id bigint unsigned auto_increment PRIMARY KEY,
                           item_store_id bigint unsigned NOT NULL,
                           item_category_id bigint unsigned NOT NULL,
                           item_name varchar(255) NOT NULL,
                           item_type varchar(100) NOT NULL default 'normal',
-                          item_stock int default 0,
-                          item_price int default 0,
-                          item_delivery_fee int default 0,
+                          item_stock varchar(255) default '0',
+                          item_price varchar(255) default '0',
+                          item_delivery_fee varchar(255) default '0',
                           item_content longtext NOT NULL,
                           item_state enum('active', 'inactive') default 'active',
                           item_view_count int default 0,
@@ -120,9 +118,9 @@ create table tbl_file (
                           id bigint unsigned auto_increment PRIMARY KEY,
                           file_type enum('image', 'document') NOT NULL,
                           file_name varchar(255) NOT NULL,
-                          file_saved_path longtext NOT NULL,
-                          file_origin_path longtext NOT NULL,
-                          file_size bigint,
+                          file_origin_name varchar(255) NOT NULL,
+                          file_saved_path varchar(255) NOT NULL,
+                          file_size varchar(255) not null,
                           created_datetime datetime default current_timestamp
 );
 
@@ -176,7 +174,7 @@ create table tbl_order_item (
 
 -- 후기 테이블
 create table tbl_review (
-                            id bigint unsigned PRIMARY KEY,
+                            id bigint unsigned auto_increment PRIMARY KEY,
                             review_item_id bigint unsigned NOT NULL,
                             review_user_id bigint unsigned NOT NULL,
                             review_score_quality int NOT NULL,
