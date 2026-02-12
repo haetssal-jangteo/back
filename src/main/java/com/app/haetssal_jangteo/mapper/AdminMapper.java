@@ -8,9 +8,10 @@ import java.util.Optional;
 
 @Mapper
 public interface AdminMapper {
-    // 상품 등록
-    public void insert(ItemDTO itemDTO);
-
     // id로 상품들 검색
     public Optional<ItemVO> selectById(Long id);
+
+    // 상품 수정
+    public void update(ItemDTO itemDTO);
 }
+
