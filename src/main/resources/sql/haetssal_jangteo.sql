@@ -87,7 +87,7 @@ create table tbl_sub_category (
 
 -- 상품 테이블
 create table tbl_item (
-<<<<<<<< HEAD:src/main/resources/sql/haetssal_jangteo.sql
+
     id bigint unsigned auto_increment PRIMARY KEY,
     item_store_id bigint unsigned NOT NULL,
     item_category_id bigint unsigned NOT NULL,
@@ -105,30 +105,11 @@ create table tbl_item (
     references tbl_store(id),
     constraint fk_item_category foreign key (item_category_id)
     references tbl_category(id)
-========
-                          id bigint unsigned PRIMARY KEY,
-                          item_market_id bigint unsigned NOT NULL,
-                          item_category_id bigint unsigned NOT NULL,
-                          item_name varchar(255) NOT NULL,
-                          item_type varchar(100) NOT NULL default 'normal',
-                          item_stock int default 0,
-                          item_price int default 0,
-                          item_delivery_fee int default 0,
-                          item_content longtext NOT NULL,
-                          item_state enum('active', 'inactive') default 'active',
-                          item_view_count int default 0,
-                          created_datetime datetime default current_timestamp,
-                          updated_datetime datetime default current_timestamp,
-                          constraint fk_item_market foreign key (item_market_id)
-                              references tbl_market(id),
-                          constraint fk_item_category foreign key (item_category_id)
-                              references tbl_category(id)
->>>>>>>> cd5da79be5a8f33349463864fb6fec722abd7df9:src/main/resources/sql/database.sql
+
 );
 
 -- 상품 옵션 테이블
 create table tbl_item_option (
-<<<<<<<< HEAD:src/main/resources/sql/haetssal_jangteo.sql
     id bigint unsigned auto_increment PRIMARY KEY,
     option_item_id bigint unsigned NOT NULL,
     option_name varchar(255) NOT NULL,
@@ -137,20 +118,10 @@ create table tbl_item_option (
     option_stock int default 0,
     constraint fk_option_item foreign key (option_item_id)
     references tbl_item(id)
-========
-                                 id bigint unsigned PRIMARY KEY,
-                                 option_item_id bigint unsigned NOT NULL,
-                                 option_name varchar(255) NOT NULL,
-                                 option_detail longtext NOT NULL,
-                                 option_price int default 0,
-                                 constraint fk_option_item foreign key (option_item_id)
-                                     references tbl_item(id)
->>>>>>>> cd5da79be5a8f33349463864fb6fec722abd7df9:src/main/resources/sql/database.sql
 );
 
 -- 첨부파일 테이블
 create table tbl_file (
-<<<<<<<< HEAD:src/main/resources/sql/haetssal_jangteo.sql
     id bigint unsigned auto_increment PRIMARY KEY,
     file_type enum('image', 'document') NOT NULL,
     file_name varchar(255) NOT NULL,
@@ -158,15 +129,6 @@ create table tbl_file (
     file_saved_path varchar(255) NOT NULL,
     file_size varchar(255) not null,
     created_datetime datetime default current_timestamp
-========
-                          id bigint unsigned PRIMARY KEY,
-                          file_type enum('image', 'document') NOT NULL,
-                          file_name varchar(255) NOT NULL,
-                          file_saved_path longtext NOT NULL,
-                          file_origin_path longtext NOT NULL,
-                          file_size bigint,
-                          created_datetime datetime default current_timestamp
->>>>>>>> cd5da79be5a8f33349463864fb6fec722abd7df9:src/main/resources/sql/database.sql
 );
 
 -- 검색어 테이블
@@ -180,7 +142,7 @@ create table tbl_keyword (
 
 -- 후기 테이블
 create table tbl_review (
-<<<<<<<< HEAD:src/main/resources/sql/haetssal_jangteo.sql
+                            
     id bigint unsigned auto_increment PRIMARY KEY,
     review_item_id bigint unsigned NOT NULL,
     review_user_id bigint unsigned NOT NULL,
@@ -195,22 +157,7 @@ create table tbl_review (
     references tbl_item(id),
     constraint fk_review_user foreign key (review_user_id)
     references tbl_user(id)
-========
-                            id bigint unsigned PRIMARY KEY,
-                            review_item_id bigint unsigned NOT NULL,
-                            review_user_id bigint unsigned NOT NULL,
-                            review_score_quality int NOT NULL,
-                            review_score_delivery int NOT NULL,
-                            review_score_kind int NOT NULL,
-                            review_content longtext NOT NULL,
-                            review_state enum('active', 'inactive'),
-                            created_datetime datetime default current_timestamp,
-                            updated_datetime datetime default current_timestamp,
-                            constraint fk_review_item foreign key (review_item_id)
-                                references tbl_item(id),
-                            constraint fk_review_user foreign key (review_user_id)
-                                references tbl_user(id)
->>>>>>>> cd5da79be5a8f33349463864fb6fec722abd7df9:src/main/resources/sql/database.sql
+                            
 );
 
 -- 찜 테이블

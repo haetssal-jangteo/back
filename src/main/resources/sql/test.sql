@@ -31,5 +31,26 @@ where item_id = 3;
 insert into tbl_user (id, user_email, user_phone, user_name, user_intro)
 values (1, 'example@example.com', '01012345678', '홍길동', '설명1');
 
-insert into tbl_user (id, user_email, user_phone, user_name, user_intro, user_latest_login)
-values (2, 'example2@example.com', '01011112222', '김철수', '설명2', current_timestamp);
+
+select id from tbl_store;
+
+insert into tbl_market (
+    market_region, market_name, market_location)
+values ('서울','가락시장','송파구');
+
+
+insert into tbl_store (
+    store_owner_id, store_market_id, store_name, store_intro, store_address)
+values ((select max(id) from tbl_user),
+           (select max(id) from tbl_market),'테스트상점','소개','주소');
+
+select id from tbl_store;
+
+insert into tbl_item (item_store_id, item_category_id, item_name, item_stock, item_price, item_content)
+values ((select max(id) from tbl_store),1,'사과박스',10,15000,'테스트');
+
+insert into tbl_category (id, category_name)
+values (1, '과일');
+
+select id from tbl_category;
+
