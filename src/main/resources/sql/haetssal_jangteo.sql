@@ -2,69 +2,69 @@ use haetssal_jangteo;
 
 -- 회원 테이블
 create table tbl_user (
-                          id bigint unsigned auto_increment PRIMARY KEY,
-                          user_email varchar(255) NOT NULL,
-                          user_password varchar(255),
-                          user_phone varchar(255) UNIQUE NOT NULL,
-                          user_reg_type enum('haetssal', 'social') default 'haetssal',
-                          user_type enum('normal', 'seller', 'admin'),
-                          user_name varchar(100) NOT NULL,
-                          user_intro longtext NOT NULL,
-                          user_visit_count int default 1,
-                          user_latest_login datetime default current_timestamp(),
-                          user_state enum('active', 'inactive') default 'active',
-                          created_datetime datetime default current_timestamp,
-                          updated_datetime datetime default current_timestamp
+    id bigint unsigned auto_increment PRIMARY KEY,
+    user_email varchar(255) NOT NULL,
+    user_password varchar(255),
+    user_phone varchar(255) UNIQUE NOT NULL,
+    user_reg_type enum('haetssal', 'social') default 'haetssal',
+    user_type enum('normal', 'seller', 'admin'),
+    user_name varchar(100) NOT NULL,
+    user_intro longtext NOT NULL,
+    user_visit_count int default 1,
+    user_latest_login datetime default current_timestamp(),
+    user_state enum('active', 'inactive') default 'active',
+    created_datetime datetime default current_timestamp,
+    updated_datetime datetime default current_timestamp
 );
 
 -- 소셜 회원 테이블
 create table tbl_auth (
-                          id bigint unsigned PRIMARY KEY,
-                          auth_provider varchar(100) default 'kakao',
-                          constraint  fk_user_auth foreign key (id)
-                              references tbl_user(id)
+    id bigint unsigned PRIMARY KEY,
+    auth_provider varchar(100) default 'kakao',
+    constraint  fk_user_auth foreign key (id)
+    references tbl_user(id)
 );
 
 -- 판매자 테이블
 create table tbl_seller (
-                            id bigint unsigned PRIMARY KEY,
-                            seller_bank_name varchar(100) NOT NULL,
-                            seller_depositor varchar(100) NOT NULL,
-                            seller_account_number varchar(255) UNIQUE NOT NULL,
-                            seller_state enum('pending', 'approved', 'denied') default 'pending',
-                            constraint fk_user_id foreign key (id)
-                                references tbl_user(id)
+    id bigint unsigned PRIMARY KEY,
+    seller_bank_name varchar(100) NOT NULL,
+    seller_depositor varchar(100) NOT NULL,
+    seller_account_number varchar(255) UNIQUE NOT NULL,
+    seller_state enum('pending', 'approved', 'denied') default 'pending',
+    constraint fk_user_id foreign key (id)
+    references tbl_user(id)
 );
 
 -- 장터 테이블
 create table tbl_market (
-                            id bigint unsigned PRIMARY KEY,
-                            market_region varchar(100) NOT NULL,
-                            market_name varchar(255) NOT NULL,
-                            market_name varchar(255) NOT NULL,
-                            market_state enum('active', 'inactive') default 'active',
-                            created_datetime datetime default current_timestamp,
-                            updated_datetime datetime default current_timestamp
+    id bigint unsigned PRIMARY KEY,
+    market_region varchar(100) NOT NULL,
+    market_name varchar(255) NOT NULL,
+    market_name varchar(255) NOT NULL,
+    market_state enum('active', 'inactive') default 'active',
+    created_datetime datetime default current_timestamp,
+    updated_datetime datetime default current_timestamp
 );
 
 
 -- 가게 테이블
 create table tbl_store (
-                           id bigint unsigned auto_increment PRIMARY KEY,
-                           store_market_id bigint unsigned NOT NULL,
-                           store_owner_id bigint unsigned NOT NULL,
-                           store_name varchar(255) NOT NULL,
-                           store_intro longtext NOT NULL,
-                           store_address varchar(255) NOT NULL,
-                           store_score int default 100,
-                           store_state enum('pending', 'denied', 'open', 'close') default 'pending',
-                           store_is_confirmed boolean default false,
-                           created_datetime datetime default current_timestamp,
-                           updated_datetime datetime default current_timestamp,
-                           constraint fk_market_store foreign key(store_market_id)
-                               references tbl_market (id),
-                           constraint fk_owner_user foreign key (store_owner_id)
-                               references tbl_user (id)
+    id bigint unsigned auto_increment PRIMARY KEY,
+    store_market_id bigint unsigned NOT NULL,
+    store_owner_id bigint unsigned NOT NULL,
+    store_name varchar(255) NOT NULL,
+    store_intro longtext NOT NULL,
+    store_address varchar(255) NOT NULL,
+    store_score int default 100,
+    store_state enum('pending', 'denied', 'open', 'close') default 'pending',
+    store_is_confirmed boolean default false,
+    created_datetime datetime default current_timestamp,
+    updated_datetime datetime default current_timestamp,
+    constraint fk_market_store foreign key(store_market_id)
+    references tbl_market (id),
+    constraint fk_owner_user foreign key (store_owner_id)
+    references tbl_user (id)
 );
 
 -- 카테고리 테이블
@@ -73,19 +73,16 @@ create table tbl_category (
                               category_name varchar(100) NOT NULL
 );
 
-
-
 create table tbl_sub_category (
-                                  id bigint unsigned PRIMARY KEY,
-                                  category_name varchar(100) NOT NULL,
-                                  parent_category_id bigint unsigned NOT NULL,
-                                  constraint fk_parent_category foreign key (parent_category_id)
-                                      references tbl_category(id)
+    id bigint unsigned PRIMARY KEY,
+    category_name varchar(100) NOT NULL,
+    parent_category_id bigint unsigned NOT NULL,
+    constraint fk_parent_category foreign key (parent_category_id)
+    references tbl_category(id)
 );
 
 -- 상품 테이블
 create table tbl_item (
-
     id bigint unsigned auto_increment PRIMARY KEY,
     item_store_id bigint unsigned NOT NULL,
     item_category_id bigint unsigned NOT NULL,
@@ -103,7 +100,6 @@ create table tbl_item (
     references tbl_store(id),
     constraint fk_item_category foreign key (item_category_id)
     references tbl_category(id)
-
 );
 
 -- 상품 옵션 테이블
@@ -131,11 +127,11 @@ create table tbl_file (
 
 -- 검색어 테이블
 create table tbl_keyword (
-                             id bigint unsigned auto_increment PRIMARY KEY,
-                             content varchar(255) NOT NULL,
-                             keyword_member_id bigint unsigned NOT NULL,
-                             constraint fk_keyword_user foreign key (keyword_member_id)
-                                 references tbl_user(id)
+    id bigint unsigned auto_increment PRIMARY KEY,
+    content varchar(255) NOT NULL,
+    keyword_member_id bigint unsigned NOT NULL,
+    constraint fk_keyword_user foreign key (keyword_member_id)
+    references tbl_user(id)
 );
 
 -- 후기 테이블

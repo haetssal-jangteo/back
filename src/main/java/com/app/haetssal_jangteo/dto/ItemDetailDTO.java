@@ -34,6 +34,9 @@ public class ItemDetailDTO {
     // 가게 소유주 마지막 로그인 시간(추후 받아와야 함)
     private String ownerLatestLogin;
 
+    // 가게 프로필 사진
+    private String storeImage;
+
     // 같은 카테고리 상품들
     private List<ItemDTO> sameCategoryItems = new ArrayList<>();
 }

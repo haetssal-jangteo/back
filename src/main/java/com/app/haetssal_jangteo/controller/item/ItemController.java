@@ -40,6 +40,4 @@ public class ItemController {
     public String goToDetail(Long id) {
         return "/item/item-detail";
     }
-
-
 }
