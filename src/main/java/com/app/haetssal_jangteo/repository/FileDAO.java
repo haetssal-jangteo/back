@@ -1,9 +1,13 @@
 package com.app.haetssal_jangteo.repository;
 
+import com.app.haetssal_jangteo.domain.FileVO;
 import com.app.haetssal_jangteo.dto.FileDTO;
+import com.app.haetssal_jangteo.mapper.FileItemMapper;
 import com.app.haetssal_jangteo.mapper.FileMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
+
+import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
@@ -15,8 +19,14 @@ public class FileDAO {
         fileMapper.insert(fileDTO);
     }
 
+//    파일 조회
+    public Optional<FileVO> findById(Long id) {
+        return fileMapper.selectById(id);
+    }
+
 //    파일 삭제
     public void delete(Long id) {
         fileMapper.delete(id);
     }
+
 }

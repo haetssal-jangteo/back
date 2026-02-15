@@ -2,8 +2,10 @@ package com.app.haetssal_jangteo.service.item;
 
 import com.app.haetssal_jangteo.common.enumeration.FileItemType;
 import com.app.haetssal_jangteo.common.enumeration.Filetype;
+import com.app.haetssal_jangteo.common.exception.FileNotFoundException;
 import com.app.haetssal_jangteo.common.exception.ItemfoundFailException;
 import com.app.haetssal_jangteo.domain.FileItemVO;
+import com.app.haetssal_jangteo.domain.FileVO;
 import com.app.haetssal_jangteo.domain.ItemOptionVO;
 import com.app.haetssal_jangteo.domain.ItemVO;
 import com.app.haetssal_jangteo.dto.*;
@@ -12,10 +14,10 @@ import com.app.haetssal_jangteo.util.DateUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -51,10 +53,10 @@ public class ItemService {
         // 옵션이 있다면, 저장
         List<ItemOptionDTO> options = itemDTO.getItemOptions();
         if(!options.isEmpty()) {
-            itemDTO.getItemOptions().forEach(option -> {
+            itemDTO.getItemOptions().forEach(optionDTO -> {
                 // 저장된 상품 id 주입
-                option.setOptionItemId(itemDTO.getId());
-                itemDAO.saveOption(option);
+                optionDTO.setOptionItemId(itemDTO.getId());
+                itemDAO.saveOption(optionDTO.toVO());
             });
         }
 
@@ -73,7 +75,6 @@ public class ItemService {
                 saveImages(images, itemDTO.getId(), todayPath, path, fileItemType);
             }
         });
-
     }
 
     // 상품 상세 정보 불러오기
@@ -93,6 +94,9 @@ public class ItemService {
 
             dto.setItemOptions(options);
             dto.setItemThumbnails(thumbnails);
+
+            // 조회수 증가
+            itemDAO.increaseViewCount(dto.getId());
 
             return dto;
         } else {
@@ -131,6 +135,81 @@ public class ItemService {
         } else {
             throw new ItemfoundFailException();
         }
+    }
+
+    // 상품 수정
+    public void update(ItemDTO itemDTO,
+                       ArrayList<MultipartFile> itemThumbnails,
+                       ArrayList<MultipartFile> itemDescImages,
+                       ArrayList<MultipartFile> itemSellerImages,
+                       ArrayList<MultipartFile> itemRefundImages) {
+        String rootPath = "C:/file/";
+        String todayPath = getTodayPath();
+        String path = rootPath + todayPath;
+
+        itemDAO.update(itemDTO.toVO());
+
+        FileDTO fileDTO = new FileDTO();
+        FileItemDTO fileItemDTO = new FileItemDTO();
+
+        // 새로 받아온 옵션 저장
+        itemDTO.getItemOptions().forEach((optionDTO) -> {
+            optionDTO.setOptionItemId(itemDTO.getId());
+            itemDAO.saveOption(optionDTO.toVO());
+        });
+
+        Map<List<MultipartFile>, FileItemType> imageMap = Map.of(
+                itemThumbnails, FileItemType.THUMBNAIL,
+                itemDescImages, FileItemType.DESC,
+                itemSellerImages, FileItemType.SELLER_INFO,
+                itemRefundImages, FileItemType.REFUND
+        );
+
+        imageMap.forEach((images, fileItemType) -> {
+            if(!images.isEmpty()) {
+                saveImages(images, itemDTO.getId(), todayPath, path, fileItemType);
+            }
+        });
+
+        // ------------- 삭제 -------------
+        // 옵션
+        if(itemDTO.getOptionIdsToDelete() != null) {
+            Arrays.stream(itemDTO.getOptionIdsToDelete()).forEach((optionId) -> {
+                itemDAO.deleteOption(Long.valueOf(optionId));
+            });
+        }
+
+        // 파일(이미지)
+        if(itemDTO.getFileIdsToDelete() != null) {
+            Arrays.stream(itemDTO.getFileIdsToDelete()).forEach((fileId) -> {
+                FileVO fileVO = fileDAO.findById(Long.valueOf(fileId)).orElseThrow(FileNotFoundException::new);
+                File file = new File(rootPath + fileVO.getFileSavedPath(), fileVO.getFileName());
+                if(file.exists()) {
+                    file.delete();
+                }
+                fileItemDAO.delete(Long.valueOf(fileId));
+                fileDAO.delete(Long.valueOf(fileId));
+            });
+        }
+    }
+
+//    삭제
+    public void delete(Long id) {
+        // 상품 id로 옵션 삭제
+        itemDAO.deleteOptionByItemId(id);
+        // 실제 파일 삭제
+        fileItemDAO.findImagesById(id).forEach(fileItemDTO -> {
+            File file = new File("C:/file/" + fileItemDTO.getFileSavedPath(), fileItemDTO.getFileName());
+            if(file.exists()) {
+                file.delete();
+            }
+
+            // 파일 id 가져와서 서버의 데이터 삭제
+            Long fileId = fileItemDTO.getId();
+            fileItemDAO.delete(fileId);
+            fileDAO.delete(fileId);
+        });
+
     }
 
     // 오늘자 경로 생성

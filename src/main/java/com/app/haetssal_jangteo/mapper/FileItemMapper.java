@@ -18,5 +18,4 @@ public interface FileItemMapper {
                                                              @Param("type") String type);
     // 상품 이미지 삭제
     public void delete(Long id);
-
 }

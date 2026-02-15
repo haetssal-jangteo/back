@@ -19,12 +19,6 @@
             item_content = #{itemContent}
         where id = #{id}
     </update>
-    
-    <update id="updateState">
-        update tbl_item
-        set item_state = #{itemState}
-        where id = #{id}
-    </update>
 
     <update id="updateViewCount">
         update tbl_item
@@ -91,4 +85,20 @@
         order by i.created_datetime desc
         limit 10
     </select>
+
+    <update id="delete">
+        update tbl_item
+        set item_state = 'inactive'
+        where id = #{id}
+    </update>
+
+    <delete id="deleteOption">
+        delete from tbl_item_option
+        where id = #{id}
+    </delete>
+
+    <delete id="deleteOptionByItemId">
+        delete from tbl_item_option
+        where option_item_id = #{itemId}
+    </delete>
 </mapper>

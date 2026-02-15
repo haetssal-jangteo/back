@@ -63,10 +63,10 @@ public class ItemMapperTests {
         itemOptionDTO4.setOptionPrice("35000");
         itemOptionDTO4.setOptionStock("30");
 
-        itemMapper.insertOption(itemOptionDTO);
-        itemMapper.insertOption(itemOptionDTO2);
-        itemMapper.insertOption(itemOptionDTO3);
-        itemMapper.insertOption(itemOptionDTO4);
+        itemMapper.insertOption(itemOptionDTO.toVO());
+        itemMapper.insertOption(itemOptionDTO2.toVO());
+        itemMapper.insertOption(itemOptionDTO3.toVO());
+        itemMapper.insertOption(itemOptionDTO4.toVO());
     }
 
     @Test
@@ -78,7 +78,7 @@ public class ItemMapperTests {
         itemDTO.setItemStock("20");
         itemDTO.setItemContent("배 1 BOX (10KG)");
 
-        itemMapper.update(itemDTO);
+        itemMapper.update(itemDTO.toVO());
     }
 
     @Test

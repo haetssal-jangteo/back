@@ -52,7 +52,7 @@ public class ItemServiceTests {
         option.setOptionPrice("100000");
         option.setOptionStock("10");
 
-        itemDAO.saveOption(option);
+        itemDAO.saveOption(option.toVO());
 
         // 파일 저장
         FileDTO fileDTO = new FileDTO();

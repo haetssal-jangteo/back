@@ -16,10 +16,16 @@ public interface ItemMapper {
     public void insert(ItemDTO itemDTO);
 
 //    상품 옵션 등록
-    public void insertOption(ItemOptionDTO itemOptionDTO);
+    public void insertOption(ItemOptionVO itemOptionVO);
+
+//    상품 옵션 삭제
+    public void deleteOption(Long id);
+
+//    상품 옵션 삭제(상품 id)
+    public void deleteOptionByItemId(Long itemId);
 
 //    상품 수정
-    public void update(ItemDTO itemDTO);
+    public void update(ItemVO itemVO);
 
 //    상품 상태 변경
     public void updateState(ItemDTO itemDTO);
@@ -46,6 +52,9 @@ public interface ItemMapper {
     public List<ItemDTO> selectSameCategoryItems(
             @Param("categoryId") Long categoryId,
             @Param("subCategoryId") Long subCategoryId,
-            @Param("thisItemId") Long thisItemId);
+            @Param("thisItemId") Long thisItemId
+    );
 
+//    상품 삭제(soft delete)
+    public void delete(Long id);
 }
