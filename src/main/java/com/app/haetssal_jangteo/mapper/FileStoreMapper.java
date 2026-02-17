@@ -8,9 +8,10 @@ import java.util.Optional;
 
 @Mapper
 public interface FileStoreMapper {
-    // 유저 프로필 이미지 등록
+    // 상점 프로필 이미지 등록
     public void insert(FileStoreVO fileStoreVO);
-
-    // 유저 id로 프로필 이미지 조회
-    public Optional<FileStoreDTO> selectById(Long userId);
+    // 상점 id로 프로필 이미지 조회
+    public Optional<FileStoreDTO> selectById(Long storeId);
+    // 상점 이미지 삭제
+    public void delete(Long id);
 }

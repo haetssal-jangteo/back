@@ -22,4 +22,9 @@ public class FileStoreMapperTest {
 
         fileStoreMapper.insert(fileStoreDTO.toFileStoreVO());
     }
+
+    @Test
+    public void testDelete() {
+        fileStoreMapper.delete(16L);
+    }
 }

@@ -3,6 +3,7 @@ package com.app.haetssal_jangteo.mapper;
 import com.app.haetssal_jangteo.domain.StoreVO;
 import com.app.haetssal_jangteo.dto.StoreDTO;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Optional;
@@ -10,13 +11,13 @@ import java.util.Optional;
 @Mapper
 public interface StoreMapper {
 //    가게 등록
-    public void insert(StoreVO storeVO);
+    public void insert(StoreDTO storeDTO);
 
 //    가게 정보 수정
     public void update(StoreVO storeVO);
 
 //    가게 상태 변경 (CLOSE, DENIED)
-    public void updateState(StoreVO storeVO);
+    public void updateState(@Param("id") Long id, @Param("state") String state);
 
 //    가게 등록 승인
     public void updateIsConfirmed(Long id);

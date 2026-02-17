@@ -27,7 +27,7 @@ public class StoreMapperTests {
         storeDTO.setStoreIntro("테스트 장터 설명");
         storeDTO.setStoreAddress("서울시 성동구 ...");
 
-        storeMapper.insert(storeDTO.toVO());
+        storeMapper.insert(storeDTO);
     }
 
     @Test
@@ -44,11 +44,10 @@ public class StoreMapperTests {
 
     @Test
     public void testUpdateState() {
-        StoreDTO storeDTO = new StoreDTO();
-        storeDTO.setId(5L);
-        storeDTO.setStoreState(StoreState.DENIED);
+        Long id = 5L;
+        String state = "denied";
 
-        storeMapper.updateState(storeDTO.toVO());
+        storeMapper.updateState(id, state);
     }
 
     @Test

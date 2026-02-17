@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -23,11 +24,13 @@ public class StoreController {
         return "store/store-write";
     }
 
-//    @PostMapping("write")
-//    public RedirectView write(StoreDTO storeDTO, RedirectAttributes redirectAttributes) {
-//
-//        redirectAttributes("id", storeDTO.getId());
-//        return RedirectView("/store/detail");
-//    }
+    @PostMapping("write")
+    public RedirectView write(StoreDTO storeDTO,
+                              MultipartFile multipartFile,
+                              RedirectAttributes redirectAttributes) {
+        storeService.save(storeDTO, multipartFile);
+        redirectAttributes.addAttribute("id", storeDTO.getId());
+        return new RedirectView("/store/detail");
+    }
 
 }

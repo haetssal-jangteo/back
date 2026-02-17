@@ -21,6 +21,9 @@ public class StoreDTO {
     private String createdDatetime;
     private String updatedDatetime;
 
+    private FileStoreDTO fileStoreImage;
+    private String toDeleteFileId;
+
     public StoreVO toVO() {
         return StoreVO.builder()
                 .id(id)
