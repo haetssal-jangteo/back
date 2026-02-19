@@ -40,12 +40,6 @@ public class ItemDTO {
 //    상품 이미지들
     private List<FileItemDTO> itemFiles = new ArrayList<>();
 
-    private List<TagDTO> tags = new ArrayList<>();
-    private String[] tagIdsToDelete;
-
-    private List<FileItemDTO> postFiles = new ArrayList<>();
-    private String[] fileIdsToDelete;
-
 //    toVO
     public ItemVO toVO() {
         return ItemVO.builder()

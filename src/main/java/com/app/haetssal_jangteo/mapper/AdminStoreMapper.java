@@ -2,20 +2,19 @@ package com.app.haetssal_jangteo.mapper;
 
 import com.app.haetssal_jangteo.common.pagination.Criteria;
 import com.app.haetssal_jangteo.common.search.Search;
-import com.app.haetssal_jangteo.domain.MarketVO;
-import org.apache.ibatis.annotations.Mapper;
+import com.app.haetssal_jangteo.domain.StoreVO;
+import com.app.haetssal_jangteo.dto.StoreDTO;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
-@Mapper
-public interface AdminMarketMapper {
+public interface AdminStoreMapper {
 
     //    전체 가게 조회 (파라미터 없음)
-    List<MarketVO> selectAllMarkets();
+    List<StoreVO> selectAllMarkets();
 
     //    목록 (페이징 + 검색)
-    List<MarketVO> selectAll(@Param("criteria") Criteria criteria, @Param("search") Search search);
+    List<StoreDTO> selectAll(@Param("criteria") Criteria criteria, @Param("search") Search search);
 
     //    전체 개수
     int selectTotal(@Param("search") Search search);
@@ -24,5 +23,6 @@ public interface AdminMarketMapper {
     List<String> selectDistinctRegions();
 
     //    수정
-    void update(MarketVO marketVO);
+    void update(StoreDTO StoreDTO);
 }
+

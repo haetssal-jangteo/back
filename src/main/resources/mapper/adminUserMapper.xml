@@ -3,11 +3,14 @@
 <mapper namespace="com.app.haetssal_jangteo.mapper.AdminUserMapper">
     <update id="update">
         update tbl_user
-        set user_name = #{itemName},
-            user_email = #{itemPrice},
-            item_type = #{itemType},
-            item_state = #{itemState},
-            updated_datetime = now()
+        set user_name = #{userName},
+            user_email = #{userEmail},
+            user_phone = #{userPhone},
+            user_type = #{userType},
+            user_state= #{userState},
+            updated_datetime = current_timestamp
         where id = #{id}
     </update>
+
+
 </mapper>
