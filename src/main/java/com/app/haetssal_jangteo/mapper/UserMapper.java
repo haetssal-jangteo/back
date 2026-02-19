@@ -17,5 +17,7 @@ public interface UserMapper {
 
     public Optional<UserDTO> selectByEmail(String userEmail);
 
-    public Optional<UserVO> selectUserForLogin(UserDTO userDTO);
+    public Optional<UserDTO> selectUserForLogin(UserDTO userDTO);
+
+    public void updateVisitCountAndLatestLogin(Long id);
 }

@@ -21,6 +21,11 @@ public class UserService {
 //    주입!
     private final UserDAO userDAO;
 
+//    이메일검사. 쓸숭있나요? => true
+    public boolean checkEmail(String memberEmail) {
+        return userDAO.findByUserEmail(memberEmail).isEmpty();
+    }
+
 //    햇살로 일반회원 회원가입
     public void haetssalJoin(UserDTO userDTO) {
         userDTO.setUserType(User.NORMAL);
@@ -41,20 +46,19 @@ public class UserService {
 
 //    카카오로 회원가입.(로그인 화면에서 kakao버튼을 눌러서 진행)
     public void kakaoJoin(UserDTO userDTO) {
+        userDTO.setUserType(User.NORMAL);
         userDTO.setAuthProvider(Provider.SOCIAL);
         userDAO.save(userDTO);
         userDAO.saveOAuth(userDTO.toOAuthVO());
     }
 
-//    이메일검사. 쓸숭있나요? => true
-    public boolean checkEmail(String memberEmail) {
-        return userDAO.findByUserEmail(memberEmail).isEmpty();
-    }
-
     // 로그인
     public UserDTO login(UserDTO userDTO) {
-        Optional<UserVO> foundUser = userDAO.findForLogin(userDTO);
-        return toDTO(foundUser.orElseThrow(LoginFailException::new));
+        Optional<UserDTO> foundUser = userDAO.findForLogin(userDTO);
+        UserDTO loginedUser = foundUser.orElseThrow(LoginFailException::new);
+        userDAO.setUserVisit(loginedUser.getId());
+
+        return loginedUser;
     }
 
     public UserDTO toDTO(UserVO userVO) {

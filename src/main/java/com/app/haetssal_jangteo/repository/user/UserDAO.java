@@ -37,7 +37,11 @@ public class UserDAO {
     }
 
     // 로그인
-    public Optional<UserVO> findForLogin(UserDTO userDTO) {
+    public Optional<UserDTO> findForLogin(UserDTO userDTO) {
         return userMapper.selectUserForLogin(userDTO);
+    }
+//    로그인했을때
+    public void setUserVisit(Long id) {
+        userMapper.updateVisitCountAndLatestLogin(id);
     }
 }
