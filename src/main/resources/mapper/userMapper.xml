@@ -12,14 +12,29 @@
     </insert>
 
     <select id="selectByEmail">
-        select id, user_email, user_password, user_phone, user_type, user_name, user_intro, user_visit_count, user_latest_login, user_state, created_datetime, updated_datetime
-        from tbl_user
+        select
+            u.id, user_email, user_password, user_phone, user_type,
+            user_name, user_intro, user_visit_count, user_latest_login,
+            user_state, created_datetime, updated_datetime, a.auth_provider
+        from tbl_user u join tbl_auth a
+        on u.id = a.id
         where user_email = #{userEmail}
     </select>
 
     <select id="selectUserForLogin">
-        select id, user_email, user_password, user_phone, user_type, user_name, user_intro, user_visit_count, user_latest_login, user_state, created_datetime, updated_datetime
-        from tbl_user
+        select
+            u.id, user_email, user_password, user_phone, user_type,
+            user_name, user_intro, user_visit_count, user_latest_login,
+            user_state, created_datetime, updated_datetime, a.auth_provider
+        from tbl_user u join tbl_auth a
+        on u.id = a.id
         where user_email = #{userEmail} and user_password = #{userPassword}
     </select>
+
+    <update id="updateVisitCountAndLatestLogin">
+        update tbl_user
+        set user_visit_count = user_visit_count + 1,
+            user_latest_login = current_timestamp
+        where id = #{id}
+    </update>
 </mapper>

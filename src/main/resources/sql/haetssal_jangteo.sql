@@ -24,6 +24,18 @@ create table tbl_auth (
                               references tbl_user(id)
 );
 
+create table tbl_delivery (
+    id bigint unsigned auto_increment PRIMARY KEY,
+    user_id bigint unsigned not null,
+    delivery_address varchar(255) not null,
+    delivery_detail_address varchar(255) not null,
+    delivery_receiver varchar(100) not null,
+    receiver_phone varchar(255) not null,
+    created_datetime datetime default current_timestamp,
+    constraint fk_user_delivery foreign key (user_id)
+    references tbl_user(id)
+);
+
 -- 판매자 테이블
 create table tbl_seller (
     id bigint unsigned PRIMARY KEY,

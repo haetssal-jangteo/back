@@ -28,6 +28,8 @@ public class UserDTO {
     private String createdDatetime;
     private String updatedDatetime;
     private Provider authProvider;
+    private boolean remember;
+    private String profileImageUrl;
 
     public UserVO toUserVO() {
         return UserVO.builder()

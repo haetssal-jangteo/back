@@ -49,7 +49,7 @@ public class UserMapperTests {
         userDTO.setUserEmail("sokkomann@naver.com");
         userDTO.setUserPassword("1234");
 
-        Optional<UserVO> foundUser = userMapper.selectUserForLogin(userDTO);
+        Optional<UserDTO> foundUser = userMapper.selectUserForLogin(userDTO);
         log.info("{}", foundUser.isPresent());
     }
 
