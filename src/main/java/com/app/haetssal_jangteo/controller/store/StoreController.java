@@ -43,9 +43,8 @@ public class StoreController {
 
     @GetMapping("/detail")
     public String goToDetail(Long id, Model model) {
-        // TODO
-        // 가게 상세 관련 DTO 새로 만들고 불러와서 경로 연결하기
-        return "/store/store-detail";
+        model.addAttribute("storeDetail", storeService.detail(id));
+        return "store/store-detail";
     }
 
 }

@@ -21,13 +21,17 @@ public class StoreDetailDTO {
     private String storeAddress;
     private String storeScore;
 
-    // 가게 소유주 마지막 로그인 시간
+    // 가게 소유주 id, 마지막 로그인 시간
     private String ownerLatestLogin;
 
     // 가게 프로필 정보
     private String fileName;
     private String fileOriginName;
     private String fileSavedPath;
+
+    // 판매 상품 개수 + 후기 개수
+    private int itemCount;
+    private int reviewCount;
 
     // 최근 등록된 상품 10개
     private List<ItemDTO> storeItems;
