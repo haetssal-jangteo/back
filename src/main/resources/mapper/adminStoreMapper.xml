@@ -2,20 +2,20 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.app.haetssal_jangteo.mapper.AdminMarketMapper">
 
-    <select id="selectDistinctRegions" resultType="string">
+    <select id="selectDistinctRegions">
         select distinct market_region
         from tbl_market
         where market_region is not null and market_region != ''
         order by market_region
     </select>
 
-    <select id="selectAllMarkets" resultType="com.app.haetssal_jangteo.domain.MarketVO">
+    <select id="selectAllMarkets">
         select id, market_region, market_name, market_location, market_state, created_datetime, updated_datetime
         from tbl_market
         order by id desc
     </select>
 
-    <select id="selectAll" parameterType="map" resultType="com.app.haetssal_jangteo.domain.MarketVO">
+    <select id="selectAll">
         select id, market_region, market_name, market_location, market_state, created_datetime, updated_datetime
         from tbl_market
         <where>
@@ -33,7 +33,7 @@
         limit #{criteria.count} offset #{criteria.offset}
     </select>
 
-    <select id="selectTotal" parameterType="map" resultType="int">
+    <select id="selectTotal">
         select count(*)
         from tbl_market
         <where>
@@ -49,7 +49,7 @@
         </where>
     </select>
 
-    <update id="update" parameterType="com.app.haetssal_jangteo.domain.MarketVO">
+    <update id="update">
         update tbl_market
         set market_name     = #{marketName},
             market_region   = #{marketRegion},

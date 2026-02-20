@@ -44,7 +44,12 @@ create table tbl_market (
                             id bigint unsigned PRIMARY KEY,
                             market_region varchar(100) NOT NULL,
                             market_name varchar(255) NOT NULL,
+<<<<<<< HEAD
                             market_state enum('active', 'inactive', 'pending') default 'active',
+=======
+                            market_location varchar(255) NOT NULL,
+                            market_state enum('active', 'inactive') default 'active',
+>>>>>>> 2e8ba375a546e8aafeca4a8e72e822a630a6e2cd
                             created_datetime datetime default current_timestamp,
                             updated_datetime datetime default current_timestamp
 );
