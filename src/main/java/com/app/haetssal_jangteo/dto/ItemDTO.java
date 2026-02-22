@@ -32,6 +32,7 @@ public class ItemDTO {
     private int itemViewCount;
     private String createdDatetime;
     private String updatedDatetime;
+    private String categoryName;
 
 //    카테고리 이름
     private String itemCategoryName;
@@ -41,8 +42,8 @@ public class ItemDTO {
     private String storeName;
 
 //    상품 옵션 (저장을 위한 값)
-    private List<ItemOptionDTO> itemOptions = new ArrayList<>();
-    private String[] optionIdsToDelete;
+    private List<ItemOptionDTO> itemOptions = new ArrayList<>(
+    ;private String[] optionIdsToDelete
 
 //    상품 썸네일
     private List<FileItemDTO> itemFiles = new ArrayList<>();
