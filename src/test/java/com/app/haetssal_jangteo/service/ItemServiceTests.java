@@ -59,7 +59,7 @@ public class ItemServiceTests {
         UUID uuid = UUID.randomUUID();
         fileDTO.setFileType(Filetype.IMAGE);
         fileDTO.setFileName(uuid.toString() + "_" + "file");
-        fileDTO.setFileOriginName("itemImage");
+        fileDTO.setFileOriginalName("itemImage");
         fileDTO.setFileSavedPath("../../path");
         fileDTO.setFileSize("100");
 
@@ -107,6 +107,12 @@ public class ItemServiceTests {
 
         log.info("{}........", sameCategoryItems);
         log.info("{}........", sameCategoryItems.size());
+    }
+
+    @Test
+    public void testFindTotal() {
+        int count = itemDAO.findTotal(2L);
+        log.info("가져온 상품 수 : {}", count);
     }
 
     public ItemOptionDTO toOptionDTO (ItemOptionVO option) {

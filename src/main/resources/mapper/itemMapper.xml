@@ -39,7 +39,7 @@
         select id, item_store_id, item_category_id, item_subcategory_id, item_name, item_type, item_stock, item_price, item_delivery_fee, item_content, item_state, item_view_count, created_datetime, updated_datetime
         from tbl_item
         where id = #{id}
-        and item_state = 'active';
+        and item_state = 'active'
     </select>
 
     <select id="selectAllOptions">
@@ -87,6 +87,38 @@
         </where>
         order by i.created_datetime desc
         limit 10
+    </select>
+
+    <select id="selectByStoreId">
+        select
+            i.id,
+            i.item_store_id,
+            i.item_category_id,
+            i.item_subcategory_id,
+            i.item_type,
+            i.item_name,
+            i.item_price,
+            i.item_content,
+            i.created_datetime,
+
+            s.store_name as storeName,
+
+            c.category_name as itemCategoryName,
+            sc.category_name as itemSubCategoryName
+        from tbl_item i
+        left join tbl_category c on i.item_category_id = c.id
+        left join tbl_sub_category sc on i.item_subcategory_id = sc.id
+        join tbl_store s on i.item_store_id = s.id
+        where i.item_store_id = #{storeId}
+        <if test="criteria != null">
+            limit #{criteria.count} offset #{criteria.offset}
+        </if>
+    </select>
+
+    <select id="selectTotalByStoreId">
+        select count(*)
+        from tbl_item
+        where item_store_id = #{storeId}
     </select>
 
     <update id="delete">

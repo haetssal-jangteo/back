@@ -1,6 +1,7 @@
 package com.app.haetssal_jangteo.mapper;
 
 import com.app.haetssal_jangteo.common.enumeration.State;
+import com.app.haetssal_jangteo.common.pagination.Criteria;
 import com.app.haetssal_jangteo.domain.ItemOptionVO;
 import com.app.haetssal_jangteo.domain.ItemVO;
 import com.app.haetssal_jangteo.dto.ItemDTO;
@@ -117,6 +118,20 @@ public class ItemMapperTests {
     public void testSelectSameCategoryItems() {
         List<ItemDTO> itemList = itemMapper.selectSameCategoryItems(100L, 101L, 7L);
         log.info("{}.......", itemList);
+    }
+
+    @Test
+    public void testSelectByStoreId() {
+        Criteria criteria = new Criteria(1, 10);
+        List<ItemDTO> itemList = itemMapper.selectByStoreId(2L, criteria);
+
+        log.info("{}........", itemList);
+    }
+
+    @Test
+    public void testSelectTotal() {
+        int count = itemMapper.selectTotalByStoreId(2L);
+        log.info("가져온 상품 수: {}", count);
     }
 
 }

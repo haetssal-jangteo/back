@@ -4,6 +4,7 @@ import com.app.haetssal_jangteo.common.enumeration.FileItemType;
 import com.app.haetssal_jangteo.common.enumeration.Filetype;
 import com.app.haetssal_jangteo.common.exception.FileNotFoundException;
 import com.app.haetssal_jangteo.common.exception.ItemNotFoundException;
+import com.app.haetssal_jangteo.common.pagination.Criteria;
 import com.app.haetssal_jangteo.domain.FileVO;
 import com.app.haetssal_jangteo.domain.ItemOptionVO;
 import com.app.haetssal_jangteo.domain.ItemVO;
@@ -135,6 +136,41 @@ public class   ItemService {
         }
     }
 
+    // 가게 id로 상품 조회(무한 스크롤)
+    public ItemWithPagingDTO getItemsForDetail(Long storeId, int page) {
+        ItemWithPagingDTO itemWithPagingDTO = new ItemWithPagingDTO();
+        int total = itemDAO.findTotal(storeId);
+
+        Criteria criteria = new Criteria(page, total);
+        itemWithPagingDTO.setTotal(total);
+
+        System.out.println("현재 criteria : " + criteria);
+        System.out.println("조회된 상품 수 : " + total);
+
+        List<ItemDTO> storeItems = itemDAO.findByStoreId(storeId, criteria).stream()
+                .map(itemDTO -> {
+                    List<FileItemDTO> thumbnails = fileItemDAO.findImagesByIdAndFileItemType(itemDTO.getId(), "thumbnail").stream().collect(Collectors.toList());
+                    if(!thumbnails.isEmpty()) {
+                        itemDTO.setItemFiles(thumbnails);
+                    }
+                    return itemDTO;
+                }).collect(Collectors.toList());
+
+        criteria.setHasMore(storeItems.size() > criteria.getRowCount());
+        itemWithPagingDTO.setCriteria(criteria);
+
+        if(criteria.isHasMore()) {
+            storeItems.remove(storeItems.size() - 1);
+        }
+
+        storeItems.forEach(itemDTO -> {
+            itemDTO.setCreatedDatetime(DateUtils.toRelativeTime(itemDTO.getCreatedDatetime()));
+        });
+        itemWithPagingDTO.setItems(storeItems);
+
+        return itemWithPagingDTO;
+    }
+
     // 상품 수정
     public void update(ItemDTO itemDTO,
                        ArrayList<MultipartFile> itemThumbnails,
@@ -191,6 +227,11 @@ public class   ItemService {
         }
     }
 
+//    상품 개수 조회
+    public int findTotal(Long id) {
+        return itemDAO.findTotal(id);
+    }
+
 //    삭제
     public void delete(Long id) {
         // 상품 id로 옵션 삭제
@@ -226,7 +267,7 @@ public class   ItemService {
             FileDTO fileDTO = new FileDTO();
             fileDTO.setFileType(image.getContentType().contains("image") ? Filetype.IMAGE : Filetype.DOCUMENT);
             fileDTO.setFileName(uuid.toString() + "_" + image.getOriginalFilename());
-            fileDTO.setFileOriginalName(image.getOriginalFilename());
+            fileDTO.setFileOriginName(image.getOriginalFilename());
             fileDTO.setFileSavedPath(todayPath);
             fileDTO.setFileSize(String.valueOf(image.getSize()));
             fileDAO.save(fileDTO);
