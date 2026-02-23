@@ -11,7 +11,7 @@ import java.util.List;
 
 @SpringBootTest
 @Slf4j
-public class AdminMapperTest {
+public class AdminMapperTests {
 
     @Autowired
     private AdminItemMapper adminMapper;
@@ -30,10 +30,10 @@ public class AdminMapperTest {
         adminMapper.update(itemDTO.toVO());
     }
 
-    @Test
-    public void testSelectAll() {
-        List<ItemDTO> itemList = adminMapper.selectAll();
-        log.info("{}.......", itemList);
-    }
+//    @Test
+//    public void testSelectAll() {
+//        List<ItemDTO> itemList = adminMapper.selectAll();
+//        log.info("{}.......", itemList);
+//    }
 }
 

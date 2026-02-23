@@ -69,12 +69,12 @@ public class AdminService {
         adminDAO.setItem(itemDTO.toVO());
 
         // 2. 태그 수정 로직 (태그 반복문 분리)
-        if (tagDAO != null && itemDTO.getTags() != null) {
-            itemDTO.getTags().forEach(tagDTO -> {
-                tagDTO.setItemId(itemDTO.getId()); // ID 설정 수정
-                tagDAO.save(tagDTO.toVO());
-            });
-        }
+//        if (tagDAO != null && itemDTO.getTags() != null) {
+//            itemDTO.getTags().forEach(tagDTO -> {
+//                tagDTO.setItemId(itemDTO.getId()); // ID 설정 수정
+//                tagDAO.save(tagDTO.toVO());
+//            });
+//        }
 
         // 3. 파일 업로드 로직
         if (multipartFiles != null) {

@@ -50,7 +50,7 @@ public class StoreServiceTests {
         UUID uuid = UUID.randomUUID();
         fileDTO.setFileType(Filetype.IMAGE);
         fileDTO.setFileName(uuid.toString() + "_" + "storeProfile");
-        fileDTO.setFileOriginName("image02");
+        fileDTO.setFileOriginalName("image02");
         fileDTO.setFileSavedPath("../../path");
         fileDTO.setFileSize("100");
 
@@ -62,6 +62,16 @@ public class StoreServiceTests {
         fileStoreDTO.setStoreId(storeDTO.getId());
 
         fileStoreDAO.save(fileStoreDTO.toFileStoreVO());
+    }
+
+    @Test
+    public void testUpdate() {
+        StoreDTO storeDTO = new StoreDTO();
+        storeDTO.setId(5L);
+        storeDTO.setStoreCategoryId(500L);
+        storeDTO.setStoreName("테스트 수정 장터3");
+        storeDTO.setStoreIntro("테스트 수정 장터 설명3");
+        storeDTO.setStoreAddress("서울 성동구3");
     }
 
     @Test

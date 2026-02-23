@@ -27,7 +27,7 @@ select
     f.created_datetime,
     fu.user_id
 from tbl_file_user fu
-join tbl_file f on fu.file_id = f.id;
+join tbl_file f on fu.id = f.id;
 
 # 가게 프로필 이미지을 조회하는 view
 create view vw_file_store as
@@ -110,4 +110,24 @@ left join tbl_file_store fs on fs.store_id = s.id
 left join tbl_file f on f.id = fs.id;
 
 drop view vw_store_detail;
+
+# 가게 id 해당 가게의 상품의 후기 조회
+create view vw_store_review as
+select
+    r.id,
+    r.review_item_id,
+    r.review_user_id,
+    u.user_name as userName,
+    r.review_score_quality,
+    r.review_score_delivery,
+    r.review_score_kind,
+    r.review_content,
+    r.review_state,
+    r.created_datetime
+from tbl_review r
+join tbl_item i on r.review_item_id = i.id
+join tbl_user u on r.review_user_id = u.id;
+
+drop view vw_store_review;
+
 

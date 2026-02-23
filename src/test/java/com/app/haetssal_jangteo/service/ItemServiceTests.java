@@ -59,7 +59,7 @@ public class ItemServiceTests {
         UUID uuid = UUID.randomUUID();
         fileDTO.setFileType(Filetype.IMAGE);
         fileDTO.setFileName(uuid.toString() + "_" + "file");
-        fileDTO.setFileOriginName("itemImage");
+        fileDTO.setFileOriginalName("itemImage");
         fileDTO.setFileSavedPath("../../path");
         fileDTO.setFileSize("100");
 

@@ -53,7 +53,7 @@ public class StoreService {
         UUID uuid = UUID.randomUUID();
         fileDTO.setFileSavedPath(todayPath);
         fileDTO.setFileSize(String.valueOf(multipartFile.getSize()));
-        fileDTO.setFileOriginalName(multipartFile.getOriginalFilename());
+        fileDTO.setFileOriginName(multipartFile.getOriginalFilename());
         fileDTO.setFileName(uuid.toString() + "_" + multipartFile.getOriginalFilename());
         fileDTO.setFileType(multipartFile.getContentType().contains("image") ? Filetype.IMAGE : Filetype.DOCUMENT);
         fileDAO.save(fileDTO);
@@ -92,7 +92,7 @@ public class StoreService {
         UUID uuid = UUID.randomUUID();
         fileDTO.setFileSavedPath(todayPath);
         fileDTO.setFileSize(String.valueOf(multipartFile.getSize()));
-        fileDTO.setFileOriginalName(multipartFile.getOriginalFilename());
+        fileDTO.setFileOriginName(multipartFile.getOriginalFilename());
         fileDTO.setFileName(uuid.toString() + "_" + multipartFile.getOriginalFilename());
         fileDTO.setFileType(multipartFile.getContentType().contains("image") ? Filetype.IMAGE : Filetype.DOCUMENT);
         fileDAO.save(fileDTO);
@@ -141,6 +141,9 @@ public class StoreService {
                         return itemDTO;
                     }).collect(Collectors.toList());
 
+            // 후기 가져오기 + (나중에)후기 이미지도 같이 가져오기
+            List<ReviewDTO> reviews = null;
+
             // 마지막 로그인 nn전
             String latestLogin = DateUtils.toRelativeTime(dto.getOwnerLatestLogin());
             dto.setOwnerLatestLogin(latestLogin);
@@ -152,8 +155,7 @@ public class StoreService {
             dto.setItemCount(items.size());
 
             // 후기 개수
-
-            // 나중에 후기도 받아와야 함
+            dto.setReviewCount(reviews.size());
 
             return dto;
         } else {
