@@ -14,6 +14,10 @@ select * from tbl_item_option;
 
 select * from tbl_file;
 
+select * from tbl_review;
+
+select * from tbl_file_review;
+
 select * from tbl_file_item;
 
 select * from tbl_file_user;
@@ -31,6 +35,14 @@ select * from tbl_seller;
 
 select * from tbl_delivery;
 
+select * from tbl_payment;
+
+INSERT INTO tbl_payment (id, user_id, item_id, payment_state)
+VALUES
+    (1, 1, 1, 'complete'),
+    (2, 1, 2, 'complete'),
+    (3, 1, 3, 'complete');
+
 # 확인용 유저 샘플
 insert into tbl_user (id, user_email, user_phone, user_name, user_intro)
 values (4,'example6@example.com', '01066666666', '홍길동8', '설명6');
@@ -44,7 +56,6 @@ where item_store_id = 8;
 # insert into tbl_market (
 #     market_region, market_name, market_location)
 # values ('서울','가락시장','송파구');
-
 
 insert into tbl_store (
     store_owner_id, store_market_id, store_name, store_intro, store_address)
