@@ -69,12 +69,12 @@ public class AdminService {
         adminDAO.setItem(itemDTO.toVO());
 
         // 2. 태그 수정 로직 (태그 반복문 분리)
-        if (tagDAO != null && itemDTO.getTags() != null) {
-            itemDTO.getTags().forEach(tagDTO -> {
-                tagDTO.setItemId(itemDTO.getId()); // ID 설정 수정
-                tagDAO.save(tagDTO.toVO());
-            });
-        }
+//        if (tagDAO != null && itemDTO.getTags() != null) {
+//            itemDTO.getTags().forEach(tagDTO -> {
+//                tagDTO.setItemId(itemDTO.getId()); // ID 설정 수정
+//                tagDAO.save(tagDTO.toVO());
+//            });
+//        }
 
         // 3. 파일 업로드 로직
         if (multipartFiles != null) {
@@ -118,23 +118,23 @@ public class AdminService {
     }
 
     //    가게 목록
-    public MarketWithPagingDTO marketList(int page, Search search) {
-        MarketWithPagingDTO marketWithPagingDTO = new MarketWithPagingDTO();
-        int total = adminMarketDAO.findTotal(search);
-        Criteria criteria = new Criteria(page, total);
-
-        List<MarketVO> markets = adminMarketDAO.findAll(criteria, search);
-
-        criteria.setHasMore(markets.size() > criteria.getRowCount());
-        marketWithPagingDTO.setTotal(total);
-        marketWithPagingDTO.setCriteria(criteria);
-
-        if (criteria.isHasMore()) {
-            markets.remove(markets.size() - 1);
-        }
-        marketWithPagingDTO.setMarkets(markets);
-        return marketWithPagingDTO;
-    }
+//    public MarketWithPagingDTO marketList(int page, Search search) {
+//        MarketWithPagingDTO marketWithPagingDTO = new MarketWithPagingDTO();
+//        int total = adminMarketDAO.findTotal(search);
+//        Criteria criteria = new Criteria(page, total);
+//
+//        List<MarketVO> markets = adminMarketDAO.findAll(criteria, search);
+//
+//        criteria.setHasMore(markets.size() > criteria.getRowCount());
+//        marketWithPagingDTO.setTotal(total);
+//        marketWithPagingDTO.setCriteria(criteria);
+//
+//        if (criteria.isHasMore()) {
+//            markets.remove(markets.size() - 1);
+//        }
+//        marketWithPagingDTO.setMarkets(markets);
+//        return marketWithPagingDTO;
+//    }
 
     //    가게 지역 목록 조회
     public List<String> findMarketRegions() {
@@ -142,7 +142,7 @@ public class AdminService {
     }
 
     //    가게 수정
-    public void updateMarket(MarketDTO marketDTO) {
-        adminMarketDAO.setMarket(marketDTO.toVO());
-    }
+//    public void updateMarket(MarketDTO marketDTO) {
+//        adminMarketDAO.setMarket(marketDTO.toVO());
+//    }
 }

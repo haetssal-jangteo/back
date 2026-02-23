@@ -50,7 +50,7 @@ public class StoreServiceTests {
         UUID uuid = UUID.randomUUID();
         fileDTO.setFileType(Filetype.IMAGE);
         fileDTO.setFileName(uuid.toString() + "_" + "storeProfile");
-        fileDTO.setFileOriginName("image02");
+        fileDTO.setFileOriginalName("image02");
         fileDTO.setFileSavedPath("../../path");
         fileDTO.setFileSize("100");
 
