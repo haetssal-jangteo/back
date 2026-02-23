@@ -1,18 +1,17 @@
 package com.app.haetssal_jangteo.service.user;
 
 import com.app.haetssal_jangteo.common.enumeration.Provider;
-import com.app.haetssal_jangteo.common.enumeration.SellerState;
 import com.app.haetssal_jangteo.common.enumeration.User;
 import com.app.haetssal_jangteo.common.exception.LoginFailException;
 import com.app.haetssal_jangteo.domain.UserVO;
-import com.app.haetssal_jangteo.dto.SellerDTO;
-import com.app.haetssal_jangteo.dto.UserDTO;
-import com.app.haetssal_jangteo.repository.user.UserDAO;
+import com.app.haetssal_jangteo.dto.*;
+import com.app.haetssal_jangteo.repository.UserDAO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
+
 
 @Service
 @RequiredArgsConstructor //주입!
@@ -20,6 +19,13 @@ import java.util.Optional;
 public class UserService {
 //    주입!
     private final UserDAO userDAO;
+
+//==========================회원가입, 로그인============================
+
+//    이메일검사. 쓸숭있나요? => true
+    public boolean checkEmail(String memberEmail) {
+        return userDAO.findByUserEmail(memberEmail).isEmpty();
+    }
 
 //    햇살로 일반회원 회원가입
     public void haetssalJoin(UserDTO userDTO) {
@@ -41,20 +47,19 @@ public class UserService {
 
 //    카카오로 회원가입.(로그인 화면에서 kakao버튼을 눌러서 진행)
     public void kakaoJoin(UserDTO userDTO) {
+        userDTO.setUserType(User.NORMAL);
         userDTO.setAuthProvider(Provider.SOCIAL);
         userDAO.save(userDTO);
         userDAO.saveOAuth(userDTO.toOAuthVO());
     }
 
-//    이메일검사. 쓸숭있나요? => true
-    public boolean checkEmail(String memberEmail) {
-        return userDAO.findByUserEmail(memberEmail).isEmpty();
-    }
-
     // 로그인
     public UserDTO login(UserDTO userDTO) {
-        Optional<UserVO> foundUser = userDAO.findForLogin(userDTO);
-        return toDTO(foundUser.orElseThrow(LoginFailException::new));
+        Optional<UserDTO> foundUser = userDAO.findForLogin(userDTO);
+        UserDTO loginedUser = foundUser.orElseThrow(LoginFailException::new);
+        userDAO.setUserVisit(loginedUser.getId());
+
+        return loginedUser;
     }
 
     public UserDTO toDTO(UserVO userVO) {

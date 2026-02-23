@@ -4,12 +4,6 @@ const nicknameInput = document.getElementById("nickname");
 // 가입하기 버튼
 const joinBtn = document.querySelector(".JoinPage-JoinButton");
 
-let joinInfo = {
-    email: "",
-    phone: "",
-    nickname: "",
-};
-
 // 전화번호 정규식
 const regPhone = /^0\d{1,2}\d{3,4}\d{4}$/;
 
@@ -30,30 +24,21 @@ phoneInput.addEventListener("keyup", (e) => {
     }
 });
 
-// 이름 입력란
-nicknameInput.addEventListener("keyup", (e) => {
-    joinInfo.nickname = e.target.value;
-});
-
 // 가입하기 버튼 기능
 joinBtn.addEventListener("click", (e) => {
     // 값이 모두 입력되었는지 검증하기
-    const isInvalid = Object.keys(joinInfo).some((key) => {
-        if (joinInfo[key] === "") {
-            const fieldNames = {
-                phone: "전화번호",
-                nickname: "닉네임",
-            };
-            alert(`${fieldNames[key]} 항목이 완료되지 않았습니다.`);
-            return true;
-        }
-        return false;
-    });
+    if (!phoneInput.value) {
+        alert("전화번호를 입력해주세요.");
+        return;
+    }
+    if (!regPhone.test(phoneInput.value)) {
+        alert("올바른 전화번호 형식이 아닙니다.");
+        return;
+    }
 
-    if (isInvalid) return;
-
-    // 여기에 가입 요청 로직 만들어야함.
-
-    // 성공하면 alert후 홈으로
     alert("회원가입에 성공했습니다.");
+    // 여기에 가입 요청 로직 만들어야함.
+    document.kakaoJoinFormTag.submit();
+    // 성공하면 alert후 홈으로
+
 });
