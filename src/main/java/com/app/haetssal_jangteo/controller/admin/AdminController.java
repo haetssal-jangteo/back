@@ -36,16 +36,15 @@ public class AdminController {
         return "admin/items";
     }
 
-    @GetMapping("/markets")
-    public String markets(@RequestParam(defaultValue = "1") int page, Search search, Model model) {
-        MarketWithPagingDTO marketWithPagingDTO = adminService.marketList(page, search);
-        model.addAttribute("marketWithPagingDTO", marketWithPagingDTO);
-        model.addAttribute("search", search);
-        model.addAttribute("regions", adminService.findMarketRegions());
-        return "admin/markets";
-    }
+//    @GetMapping("/markets")
+//    public String markets(@RequestParam(defaultValue = "1") int page, Search search, Model model) {
+//        MarketWithPagingDTO marketWithPagingDTO = adminService.marketList(page, search);
+//        model.addAttribute("marketWithPagingDTO", marketWithPagingDTO);
+//        model.addAttribute("search", search);
+//        model.addAttribute("regions", adminService.findMarketRegions());
+//        return "admin/markets";
+//    }
 
-    // ===== REST API =====
 
     @GetMapping("/api/items")
     @ResponseBody
@@ -61,17 +60,17 @@ public class AdminController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/api/markets")
-    @ResponseBody
-    public ResponseEntity<MarketWithPagingDTO> getMarkets(@RequestParam(defaultValue = "1") int page, Search search) {
-        return ResponseEntity.ok(adminService.marketList(page, search));
-    }
+//    @GetMapping("/api/markets")
+//    @ResponseBody
+//    public ResponseEntity<MarketWithPagingDTO> getMarkets(@RequestParam(defaultValue = "1") int page, Search search) {
+//        return ResponseEntity.ok(adminService.marketList(page, search));
+//    }
 
-    @PutMapping("/api/markets/{id}")
-    @ResponseBody
-    public ResponseEntity<Void> updateMarket(@PathVariable Long id, @RequestBody MarketDTO marketDTO) {
-        marketDTO.setId(id);
-        adminService.updateMarket(marketDTO);
-        return ResponseEntity.ok().build();
-    }
+//    @PutMapping("/api/markets/{id}")
+//    @ResponseBody
+//    public ResponseEntity<Void> updateMarket(@PathVariable Long id, @RequestBody MarketDTO marketDTO) {
+//        marketDTO.setId(id);
+//        adminService.updateMarket(marketDTO);
+//        return ResponseEntity.ok().build();
+//    }
 }

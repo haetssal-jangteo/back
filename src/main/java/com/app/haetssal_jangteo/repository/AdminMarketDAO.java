@@ -3,6 +3,7 @@ package com.app.haetssal_jangteo.repository;
 import com.app.haetssal_jangteo.common.pagination.Criteria;
 import com.app.haetssal_jangteo.common.search.Search;
 import com.app.haetssal_jangteo.domain.MarketVO;
+import com.app.haetssal_jangteo.dto.StoreDTO;
 import com.app.haetssal_jangteo.mapper.AdminStoreMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -20,7 +21,7 @@ public class AdminMarketDAO {
     }
 
     //    가게 목록 조회
-    public List<MarketVO> findAll(Criteria criteria, Search search) {
+    public List<StoreDTO> findAll(Criteria criteria, Search search) {
         return adminStoreMapper.selectAll(criteria, search);
     }
 
@@ -30,7 +31,7 @@ public class AdminMarketDAO {
     }
 
     //    수정
-    public void setMarket(MarketVO marketVO) {
-        adminStoreMapper.update(marketVO);
-    }
+//    public void setMarket(MarketVO marketVO) {
+//        adminStoreMapper.update(marketVO);
+//    }
 }

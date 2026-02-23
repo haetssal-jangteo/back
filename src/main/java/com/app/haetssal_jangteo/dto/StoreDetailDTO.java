@@ -38,5 +38,6 @@ public class StoreDetailDTO {
     private List<ItemDTO> storeItems;
 
     // 가게의 상품의 후기들
+    private List<ReviewDTO> storeReviews;
 
 }

@@ -27,7 +27,7 @@ select
     f.created_datetime,
     fu.user_id
 from tbl_file_user fu
-join tbl_file f on fu.file_id = f.id;
+join tbl_file f on fu.id = f.id;
 
 # 가게 프로필 이미지을 조회하는 view
 create view vw_file_store as
