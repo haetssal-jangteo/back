@@ -1,9 +1,5 @@
 use haetssal_jangteo;
 
-ALTER TABLE tbl_item MODIFY COLUMN item_state ENUM('active', 'inactive', 'pending') DEFAULT 'active';
-ALTER TABLE tbl_market MODIFY COLUMN market_state ENUM('active', 'inactive', 'pending') DEFAULT 'active';
-
-
 -- 회원 테이블
 create table tbl_user (
                           id bigint unsigned auto_increment PRIMARY KEY,
@@ -28,16 +24,44 @@ create table tbl_auth (
                               references tbl_user(id)
 );
 
+-- 배송지 테이블
 create table tbl_delivery (
     id bigint unsigned auto_increment PRIMARY KEY,
     user_id bigint unsigned not null,
     delivery_address varchar(255) not null,
     delivery_detail_address varchar(255) not null,
     delivery_receiver varchar(100) not null,
+    delivery_is_main boolean default false,
     receiver_phone varchar(255) not null,
     created_datetime datetime default current_timestamp,
     constraint fk_user_delivery foreign key (user_id)
     references tbl_user(id)
+);
+
+-- 주문 테이블
+create table tbl_order (
+   id bigint unsigned primary key,
+   user_id bigint unsigned not null,
+   order_delivery_type enum('post', 'take'),
+   order_state enum('pending', 'complete') default 'pending',
+   order_purchase_date datetime default current_timestamp,
+   order_take_date datetime not null,
+   constraint fk_payment_user foreign key (user_id)
+   references tbl_user(id)
+);
+
+-- 결제 테이블
+# TODO
+
+-- 주문 상품 목록 테이블
+create table tbl_order_item (
+    id bigint unsigned primary key,
+    order_id bigint unsigned not null,
+    item_id bigint unsigned not null,
+    constraint fk_list_order foreign key (order_id)
+    references tbl_order(id),
+    constraint fk_list_item foreign key (item_id)
+    references tbl_item(id)
 );
 
 -- 판매자 테이블
@@ -56,16 +80,18 @@ create table tbl_market (
                             id bigint unsigned PRIMARY KEY,
                             market_region varchar(100) NOT NULL,
                             market_name varchar(255) NOT NULL,
-<<<<<<< HEAD
-                            market_state enum('active', 'inactive', 'pending') default 'active',
-=======
                             market_location varchar(255) NOT NULL,
                             market_state enum('active', 'inactive') default 'active',
->>>>>>> 2e8ba375a546e8aafeca4a8e72e822a630a6e2cd
                             created_datetime datetime default current_timestamp,
                             updated_datetime datetime default current_timestamp
 );
 
+
+-- 카테고리 테이블
+create table tbl_category (
+                              id bigint unsigned PRIMARY KEY,
+                              category_name varchar(100) NOT NULL
+);
 
 -- 가게 테이블
 create table tbl_store (
@@ -84,9 +110,7 @@ create table tbl_store (
                            constraint fk_market_store foreign key(store_market_id)
                                references tbl_market (id),
                            constraint fk_owner_user foreign key (store_owner_id)
-                               references tbl_user (id),
-                           constraint fk_store_category foreign key (store_category_id)
-                               references tbl_category (id)
+                               references tbl_user (id)
 );
 
 -- 카테고리 테이블
@@ -117,7 +141,7 @@ create table tbl_item (
     item_price varchar(255) default '0',
     item_delivery_fee varchar(255) default '0',
     item_content longtext NOT NULL,
-    item_state enum('active', 'inactive', 'pending') default 'active',
+    item_state enum('active', 'inactive') default 'active',
     item_view_count int default 0,
     created_datetime datetime default current_timestamp,
     updated_datetime datetime default current_timestamp,
