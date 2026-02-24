@@ -53,8 +53,17 @@ create table tbl_order (
    references tbl_cart(id)
 );
 
-# 결제 테이블
-# TODO
+-- 결제 테이블
+create table tbl_payment (
+    id bigint unsigned primary key,
+    user_id bigint unsigned not null,
+    item_id bigint unsigned not null,
+    payment_state enum('pending', 'shipping', 'complete', 'cancelled') default 'pending',
+    constraint fk_pay_user foreign key (user_id)
+    references tbl_user(id),
+    constraint fk_pay_item foreign key (item_id)
+    references tbl_item(id)
+);
 
 # 장바구니 테이블
 create table tbl_cart (
@@ -199,7 +208,7 @@ create table tbl_review (
     review_score_delivery int NOT NULL,
     review_score_kind int NOT NULL,
     review_content longtext NOT NULL,
-    review_state enum('active', 'inactive'),
+    review_state enum('active', 'inactive') default 'active',
     created_datetime datetime default current_timestamp,
     updated_datetime datetime default current_timestamp,
     constraint fk_review_item foreign key (review_item_id)
@@ -279,11 +288,12 @@ create table tbl_file_report (
 
 create table tbl_file_review (
                                  id bigint unsigned NOT NULL,
-                                 report_id bigint unsigned NOT NULL,
-                                 constraint fk_file_review foreign key (id)
-                                     references tbl_file(id),
-                                 constraint fk_target_review foreign key (report_id)
-                                     references tbl_review(id)
+                                 file_id bigint unsigned NOT NULL,
+                                 review_id bigint unsigned NOT NULL,
+                                 constraint fk_file_review foreign key (file_id)
+                                 references tbl_file(id),
+                                 constraint fk_target_review foreign key (review_id)
+                                 references tbl_review(id)
 );
 
 # -------------------------------

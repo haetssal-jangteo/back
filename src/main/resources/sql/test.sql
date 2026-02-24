@@ -14,6 +14,10 @@ select * from tbl_item_option;
 
 select * from tbl_file;
 
+select * from tbl_review;
+
+select * from tbl_file_review;
+
 select * from tbl_file_item;
 
 select * from tbl_file_user;
@@ -30,6 +34,14 @@ select * from tbl_auth;
 select * from tbl_seller;
 
 select * from tbl_delivery;
+
+select * from tbl_payment;
+
+INSERT INTO tbl_payment (id, user_id, item_id, payment_state)
+VALUES
+    (1, 1, 1, 'complete'),
+    (2, 1, 2, 'complete'),
+    (3, 1, 3, 'complete');
 
 # 확인용 유저 샘플
 insert into tbl_user (id, user_email, user_phone, user_name, user_intro)
