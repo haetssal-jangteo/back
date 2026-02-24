@@ -38,6 +38,7 @@ public class AdminController {
         model.addAttribute("search", search);
         model.addAttribute("regions", adminService.findStoreRegions());
         return "admin/stores";
+        
     }
 
     @GetMapping("/users")
