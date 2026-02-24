@@ -14,6 +14,10 @@ select * from tbl_item_option;
 
 select * from tbl_file;
 
+select * from tbl_review;
+
+select * from tbl_file_review;
+
 select * from tbl_file_item;
 
 select * from tbl_file_user;
@@ -30,10 +34,6 @@ select * from tbl_auth;
 select * from tbl_seller;
 
 select * from tbl_delivery;
-
-select * from tbl_cart;
-
-select * from tbl_cart_item;
 
 # 확인용 유저 샘플
 insert into tbl_user (id, user_email, user_phone, user_name, user_intro)
