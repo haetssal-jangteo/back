@@ -39,9 +39,9 @@ select * from tbl_payment;
 
 INSERT INTO tbl_payment (id, user_id, item_id, payment_state)
 VALUES
-    (1, 1, 1, 'complete'),
-    (2, 1, 2, 'complete'),
-    (3, 1, 3, 'complete');
+    (1, 2, 1, 'complete'),
+    (2, 2, 2, 'complete'),
+    (3, 2, 3, 'complete');
 
 # 확인용 유저 샘플
 insert into tbl_user (id, user_email, user_phone, user_name, user_intro)
