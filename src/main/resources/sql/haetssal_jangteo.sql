@@ -62,17 +62,6 @@ create table tbl_payment (
     references tbl_item(id)
 );
 
--- 주문 상품 목록 테이블
-create table tbl_order_item (
-    id bigint unsigned primary key,
-    order_id bigint unsigned not null,
-    item_id bigint unsigned not null,
-    constraint fk_list_order foreign key (order_id)
-    references tbl_order(id),
-    constraint fk_list_item foreign key (item_id)
-    references tbl_item(id)
-);
-
 -- 판매자 테이블
 create table tbl_seller (
     id bigint unsigned PRIMARY KEY,
