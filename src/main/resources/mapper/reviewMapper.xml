@@ -24,24 +24,39 @@
 
     <select id="selectByStoreId">
         select
-            id,
-            review_item_id,
-            review_user_id,
-            review_score_quality,
-            review_score_delivery,
-            review_score_kind,
-            review_content,
-            review_state,
-            created_datetime,
-            userName,
-            userFileName,
-            userFileSavedPath,
-            itemName,
-            itemPrice,
-            itemStoreid,
-            itemFileName,
-            itemFileSavedPath
+            id, reviewItemId, reviewUserId,
+            reviewScoreQuality, reviewScoreDelivery, reviewScoreKind,
+            reviewContent, reviewState, createdDatetime, updatedDatetime,
+            itemName, itemPrice,
+            storeName,
+            userName
         from vw_store_review
-        where itemStoreid = #{storeId}
+        where storeId = #{storeId}
+        order by createdDatetime desc
+    </select>
+
+    <select id="selectCountByStoreId">
+        select count(*)
+        from vw_store_review
+        where storeId = #{storeId}
+    </select>
+
+    <select id="selectByItemId">
+        select
+            id, reviewItemId, reviewUserId,
+            reviewScoreQuality, reviewScoreDelivery, reviewScoreKind,
+            reviewContent, reviewState, createdDatetime, updatedDatetime,
+            itemName, itemPrice,
+            storeName,
+            userName
+        from vw_store_review
+        where reviewItemId = #{itemId}
+        order by createdDatetime desc
+    </select>
+
+    <select id="selectCountByItemId">
+        select count(*)
+        from vw_store_review
+        where reviewItemId = #{itemId}
     </select>
 </mapper>

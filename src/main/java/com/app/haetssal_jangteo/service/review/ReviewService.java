@@ -87,7 +87,6 @@ public class ReviewService {
 //    2번탭에 리뷰목록 뿌리기
     public List<ReviewDTO> getReviewListByUserId(Long userId) {
         return reviewDAO.findReviewsByUserId(userId);
-
     }
 
 //

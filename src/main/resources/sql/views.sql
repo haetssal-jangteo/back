@@ -115,17 +115,23 @@ drop view vw_store_detail;
 create view vw_store_review as
 select
     r.id,
-    r.review_item_id,
-    r.review_user_id,
-    u.user_name as userName,
-    r.review_score_quality,
-    r.review_score_delivery,
-    r.review_score_kind,
-    r.review_content,
-    r.review_state,
-    r.created_datetime
+    r.review_item_id      as reviewItemId,
+    r.review_user_id      as reviewUserId,
+    r.review_score_quality as reviewScoreQuality,
+    r.review_score_delivery as reviewScoreDelivery,
+    r.review_score_kind   as reviewScoreKind,
+    r.review_content      as reviewContent,
+    r.review_state        as reviewState,
+    r.created_datetime    as createdDatetime,
+    r.updated_datetime    as updatedDatetime,
+    i.item_name           as itemName,
+    i.item_price          as itemPrice,
+    s.id                  as storeId,
+    s.store_name          as storeName,
+    u.user_name           as userName
 from tbl_review r
 join tbl_item i on r.review_item_id = i.id
+join tbl_store s on i.item_store_id = s.id
 join tbl_user u on r.review_user_id = u.id;
 
 drop view vw_store_review;

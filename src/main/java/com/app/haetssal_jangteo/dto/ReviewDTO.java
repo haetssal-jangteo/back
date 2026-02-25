@@ -7,8 +7,7 @@ import lombok.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Getter
-@Setter
+@Getter @Setter
 @ToString
 @EqualsAndHashCode(of="id")
 @NoArgsConstructor

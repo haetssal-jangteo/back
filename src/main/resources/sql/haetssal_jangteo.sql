@@ -206,7 +206,6 @@ create table tbl_keyword (
 
 -- 후기 테이블
 create table tbl_review (
-                            
     id bigint unsigned auto_increment PRIMARY KEY,
     review_item_id bigint unsigned NOT NULL,
     review_user_id bigint unsigned NOT NULL,
@@ -283,9 +282,9 @@ create table tbl_file_report (
 );
 
 create table tbl_file_review (
-                                 file_id bigint unsigned NOT NULL,
+                                 id bigint unsigned NOT NULL,
                                  review_id bigint unsigned NOT NULL,
-                                 constraint fk_file_review foreign key (file_id)
+                                 constraint fk_file_review foreign key (id)
                                      references tbl_file(id),
                                  constraint fk_target_review foreign key (review_id)
                                      references tbl_review(id)
