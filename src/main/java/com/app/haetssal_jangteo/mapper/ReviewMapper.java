@@ -17,7 +17,7 @@ public interface ReviewMapper {
     public int selectReviewCountByUserId(Long userId);
 
     // 특정 상품의 리뷰 목록
-    public List<ReviewDTO> selectAllByItemId(Long itemId);
+//    public List<ReviewDTO> selectAllByItemId(Long itemId);
 
     // 가게 id로 해당 가게의 상품 후기들 조회
     public List<ReviewDTO> selectByStoreId(Long storeId);
