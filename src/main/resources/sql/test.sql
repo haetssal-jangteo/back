@@ -12,6 +12,10 @@ select * from tbl_item;
 
 select * from tbl_item_option;
 
+select * from tbl_cart;
+
+select * from tbl_cart_item;
+
 select * from tbl_file;
 
 select * from tbl_review;
@@ -97,3 +101,10 @@ from tbl_item i
 left join tbl_category c on i.item_category_id = c.id
 left join tbl_sub_category sc on i.item_subcategory_id = sc.id
 where i.item_store_id = 2;
+
+insert into tbl_review (review_item_id, review_user_id, review_score_quality, review_score_delivery, review_score_kind, review_content)
+values
+(5, 1, 3, 3, 3, 'TEST REVIEW 01'),
+(5, 2, 3, 1, 2, 'TEST REVIEW 02'),
+(5, 3, 3, 2, 1, 'TEST REVIEW 03'),
+(5, 4, 1, 2, 3, 'TEST REVIEW 04');

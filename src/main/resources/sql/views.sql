@@ -115,19 +115,59 @@ drop view vw_store_detail;
 create view vw_store_review as
 select
     r.id,
-    r.review_item_id,
-    r.review_user_id,
-    u.user_name as userName,
-    r.review_score_quality,
-    r.review_score_delivery,
-    r.review_score_kind,
-    r.review_content,
-    r.review_state,
-    r.created_datetime
+    r.review_item_id      as reviewItemId,
+    r.review_user_id      as reviewUserId,
+    r.review_score_quality as reviewScoreQuality,
+    r.review_score_delivery as reviewScoreDelivery,
+    r.review_score_kind   as reviewScoreKind,
+    r.review_content      as reviewContent,
+    r.review_state        as reviewState,
+    r.created_datetime    as createdDatetime,
+    r.updated_datetime    as updatedDatetime,
+    i.item_name           as itemName,
+    i.item_price          as itemPrice,
+    s.id                  as storeId,
+    s.store_name          as storeName,
+    u.user_name           as userName
 from tbl_review r
 join tbl_item i on r.review_item_id = i.id
+join tbl_store s on i.item_store_id = s.id
 join tbl_user u on r.review_user_id = u.id;
 
 drop view vw_store_review;
 
+# 장바구니의 상품 상세 정보 조회
+create view vw_cart_item as
+select
+    ci.id,
+    ci.cart_id as cartId,
+    c.user_id as userId,
+    ci.item_id as itemId,
+    ci.item_name as itemName,
+    ci.item_option as itemOption,
+    ci.item_price as itemPrice,
+    ci.item_count as itemCount,
+    i.item_delivery_fee as itemDeliveryFee,
 
+    ct.category_name as categoryName,
+    sct.category_name as subCategoryName,
+
+    s.store_name as storeName,
+
+    f.file_name as fileName,
+    f.file_saved_path as fileSavedPath
+from tbl_cart_item ci
+join tbl_cart c on ci.cart_id = c.id
+left join tbl_item i on ci.item_id = i.id
+inner join tbl_category ct on ct.id = i.item_category_id
+inner join tbl_sub_category sct on sct.id = i.item_subcategory_id
+inner join tbl_store s on s.id = i.item_store_id
+left join (
+    select fi.item_id, min(fi.id) as file_id
+    from tbl_file_item fi
+    group by fi.item_id
+) fi_first on fi_first.item_id = i.id
+left join tbl_file f on f.id = fi_first.file_id;
+
+
+drop view vw_cart_item;

@@ -7,8 +7,7 @@ import lombok.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Getter
-@Setter
+@Getter @Setter
 @ToString
 @EqualsAndHashCode(of="id")
 @NoArgsConstructor
@@ -25,7 +24,7 @@ public class ReviewDTO {
     private String updatedDatetime;
 
     // 리뷰 이미지 목록
-    private List<FileDTO> reviewFiles = new ArrayList<>();
+    private List<FileReviewDTO> reviewFiles = new ArrayList<>();
 
     // 상품 정보 (목록에서 보여줄 때)
     private String itemName;

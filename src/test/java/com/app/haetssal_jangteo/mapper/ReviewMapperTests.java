@@ -22,7 +22,7 @@ public class ReviewMapperTests {
     public void insertTest() {
         ReviewDTO reviewDTO = new ReviewDTO();
 
-        reviewDTO.setReviewItemId(1L);
+        reviewDTO.setReviewItemId(2L);
         reviewDTO.setReviewUserId(2L);
         reviewDTO.setReviewScoreQuality(3);
         reviewDTO.setReviewScoreDelivery(2);
@@ -56,5 +56,29 @@ public class ReviewMapperTests {
     public void selectImagesByReviewIdTest() {
         List<FileReviewDTO> list = fileReviewMapper.selectImagesByReviewId(2L);
         log.info("2번리뷰의 사진이에요 {}", list);
+    }
+
+    @Test
+    public void testSelectByItemId() {
+        List<ReviewDTO> foundReviews = reviewMapper.selectByItemId(5L, null);
+        log.info("{}...", foundReviews);
+    }
+
+    @Test
+    public void testSelectCountByItemId() {
+        int count = reviewMapper.selectCountByItemId(5L);
+        log.info("찾은 후기 개수 : {}", count);
+    }
+
+    @Test
+    public void testSelectByStoreId() {
+        List<ReviewDTO> foundReviews = reviewMapper.selectByStoreId(129L, null);
+        log.info("{}...", foundReviews);
+    }
+
+    @Test
+    public void testSelectCountByStoreId() {
+        int count = reviewMapper.selectCountByStoreId(129L);
+        log.info("찾은 후기 개수 : {}", count);
     }
 }

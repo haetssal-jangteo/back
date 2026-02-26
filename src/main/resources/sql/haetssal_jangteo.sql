@@ -62,6 +62,28 @@ create table tbl_payment (
     references tbl_item(id)
 );
 
+# 장바구니 테이블
+create table tbl_cart (
+    id bigint unsigned auto_increment primary key,
+    user_id bigint unsigned not null,
+    constraint fk_cart_user foreign key (user_id)
+    references tbl_user(id)
+);
+
+create table tbl_cart_item (
+    id bigint unsigned auto_increment primary key,
+    cart_id bigint unsigned not null,
+    item_id bigint unsigned not null,
+    item_name varchar(255) not null,
+    item_option varchar(255) not null,
+    item_price varchar(255) not null,
+    item_count int default 1,
+    constraint fk_cart foreign key (cart_id)
+        references tbl_cart(id),
+    constraint fk_item foreign key (item_id)
+        references tbl_item(id)
+);
+
 -- 판매자 테이블
 create table tbl_seller (
     id bigint unsigned PRIMARY KEY,
@@ -184,7 +206,6 @@ create table tbl_keyword (
 
 -- 후기 테이블
 create table tbl_review (
-                            
     id bigint unsigned auto_increment PRIMARY KEY,
     review_item_id bigint unsigned NOT NULL,
     review_user_id bigint unsigned NOT NULL,

@@ -47,16 +47,19 @@ const buyBtnInMain = document.querySelector(".buy-btn");
 const prdOptionBtns = document.querySelectorAll(".each-product-option");
 
 // 12번 이벤트
-// const buyBtnInCart = document.querySelector(".cart-buy-btn");
+const buyBtnInCart = document.querySelector(".cart-buy-btn");
 
 // 13번 이벤트
-// const getMoreBtn = document.querySelector(".get-more-btn");
-// const firstCardHeight = document.querySelector(".each-product-option-wrap").getBoundingClientRect().top + scrollY;
+const getMoreBtn = document.querySelector(".get-more-btn");
+const firstCardHeight = document.querySelector(".each-product-option-wrap")?.getBoundingClientRect().top + scrollY || 0;
 
 // 아직 안쓰는 변수들
 // const showAllReview = document.querySelector(".all-review-btn");
 
 // const toCreatorDetail = document.querySelector(".creator-wrapper");
+
+// 상품 id 값을 담은 input
+const itemId = document.getElementById("itemId");
 
 // 1. 상품상세/리뷰 탭 눌렀을때 이벤트
 portals.forEach((portal, i) => {
@@ -67,6 +70,7 @@ portals.forEach((portal, i) => {
         if(name == "itemDesc") {
             await itemService.getItemDescImages(id, itemLayout.showItemDescImages);
         } else {
+            page = 1;
             await itemService.getItemReviews(id, itemLayout.showItemReviews);
         }
 
@@ -211,7 +215,6 @@ $(window).scroll((e) => {
 
     // 7-3.셀러인트로 지나면 active주기
     // 기본적으로 active는 [0]인 상품설명에 주어져있음
-
     const sellerIntroTarget = document.querySelector("#sellerIntro");
     const sellerTargetHeight = sellerIntroTarget.getBoundingClientRect().top + window.scrollY -108; 
 
@@ -301,23 +304,41 @@ prdOptionBtns.forEach((btn) => {
 });
 
 // 12. 카트에 담고 구매버튼 눌렀을때 이벤트
-// buyBtnInCart.addEventListener("click", (e) => {
+buyBtnInCart.addEventListener("click", (e) => {
 
-// });
+});
 
-// 13. 더담기버튼
-// getMoreBtn.addEventListener("click", (e) => {
-//     document.querySelector(".sticker-container").scrollTo({
-//         top: firstCardHeight,
-//         behavior: "smooth"
-//     });
-// });
+// 13. 장바구니 버튼 이벤트
+getMoreBtn.addEventListener("click",  async (e) => {
+    document.querySelector(".sticker-container").scrollTo({
+        top: firstCardHeight,
+        behavior: "smooth"
+    });
 
+    const cards = document.querySelectorAll(".each-cart-wrap")
 
-// 0. 프로필 대시보드(기본화면) 맨 아래에서 후기전체보기 버튼 눌렀을때 가게상세 리뷰로 이동
-// showAllReview.addEventListener("click", (e) => {
+    const cartItemDTO = {
+        userId: document.getElementById("loginUserId").value,
+        itemId: document.getElementById("itemId").value,
+        optionsToAdd : []
+    };
 
-// });
+    cards.forEach((card) => {
+        cartItemDTO.optionsToAdd.push(card.dataset.optionId);
+    });
+    
+    if(!cartItemDTO.userId) {
+        let result = confirm("로그인이 필요한 서비스 입니다.\n로그인 페이지로 이동하시겠습니까?");
+        if(result) {
+            location.href = "/user/login";
+        } else {
+            return;
+        }
+    }
+
+    await itemService.addCartItem(cartItemDTO);
+});
+
 
 // 0. 사이드바 판매자 카드 눌렀을때 가게상세로 이동(기본화면)
 // toCreatorDetail.addEventListener("click", (e) => {
